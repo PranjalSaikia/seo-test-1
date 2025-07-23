@@ -117,12 +117,12 @@ export default function CountryComparison({ countries }: CountryComparisonProps)
       {/* Search Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <h2 className="flex items-center gap-2">
             <Suspense fallback={<IconSkeleton />}>
               <Search className="h-5 w-5" />
             </Suspense>
             Select Countries to Compare
-          </CardTitle>
+          </h2>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
