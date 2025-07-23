@@ -13,6 +13,7 @@ const Search = lazy(() => import('lucide-react').then(mod => ({ default: mod.Sea
 const ArrowRight = lazy(() => import('lucide-react').then(mod => ({ default: mod.ArrowRight })));
 
 import { useDebounce } from '@/hooks/useDebounce';
+import Link from 'next/link';
 
 // Loading components
 const IconSkeleton = () => <div className="h-5 w-5 bg-gray-200 rounded animate-pulse" />;
@@ -235,6 +236,12 @@ export default function CountryComparison({ countries }: CountryComparisonProps)
                         <span className="text-gray-600">Area (mi²):</span>
                         <span className="font-semibold">{formatAreaMiles(country.area)}</span>
                       </div>
+                    </div>
+
+                    <div className="pt-4">
+                      <Link href={`/countries/${country.code}`}>
+                      <Button size="sm" variant={"ghost"}>View Details</Button>
+                    </Link>
                     </div>
                   </CardContent>
                 </Card>
