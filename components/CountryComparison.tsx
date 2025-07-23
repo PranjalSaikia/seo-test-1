@@ -6,11 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Search, ArrowRight } from 'lucide-react';
 
 // Lazy load components to reduce initial bundle
 const VirtualizedCountryList = lazy(() => import('./VirtualizedCountryList').then(mod => ({ default: mod.VirtualizedCountryList })));
-const Search = lazy(() => import('lucide-react').then(mod => ({ default: mod.Search })));
-const ArrowRight = lazy(() => import('lucide-react').then(mod => ({ default: mod.ArrowRight })));
 
 import { useDebounce } from '@/hooks/useDebounce';
 import Link from 'next/link';
@@ -180,6 +179,35 @@ export default function CountryComparison({ countries }: CountryComparisonProps)
         </CardContent>
       </Card>
 
+       {/* Empty State */}
+      {selectedCountries.length === 0 && (
+        <div className="text-center py-12">
+          <div className="mb-4">
+            <Suspense fallback={<SearchSkeleton />}>
+              <Search className="h-16 w-16 text-gray-300 mx-auto" />
+            </Suspense>
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-2">Start Comparing Countries</h3>
+          <p className="text-gray-600 mb-6">
+            Search and select countries above to see detailed size comparisons and statistics.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+            {popularCountries.map((country) => (
+              <Button
+                key={country.code}
+                variant="outline"
+                size="sm"
+                onClick={() => addCountry(country)}
+                className="hover:bg-blue-50 will-change-transform"
+              >
+                <span className="mr-2" role="img" aria-label={`${country.name} flag`}>{country.flag}</span>
+                {country.name}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Comparison Results */}
       {selectedCountries.length > 0 && (
         <div className="space-y-6">
@@ -294,34 +322,7 @@ export default function CountryComparison({ countries }: CountryComparisonProps)
         </div>
       )}
 
-      {/* Empty State */}
-      {selectedCountries.length === 0 && (
-        <div className="text-center py-12">
-          <div className="mb-4">
-            <Suspense fallback={<SearchSkeleton />}>
-              <Search className="h-16 w-16 text-gray-300 mx-auto" />
-            </Suspense>
-          </div>
-          <h3 className="text-xl font-medium text-gray-900 mb-2">Start Comparing Countries</h3>
-          <p className="text-gray-600 mb-6">
-            Search and select countries above to see detailed size comparisons and statistics.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
-            {popularCountries.map((country) => (
-              <Button
-                key={country.code}
-                variant="outline"
-                size="sm"
-                onClick={() => addCountry(country)}
-                className="hover:bg-blue-50 will-change-transform"
-              >
-                <span className="mr-2" role="img" aria-label={`${country.name} flag`}>{country.flag}</span>
-                {country.name}
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
+     
     </div>
   );
 }

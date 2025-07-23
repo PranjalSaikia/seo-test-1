@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 // Optimize font loading with preload
 const inter = Inter({ 
   subsets: ['latin'],
-  display: 'swap',
+   display: 'swap',
   preload: true,
   variable: '--font-inter',
 });
